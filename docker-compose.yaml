@@ -1,6 +1,6 @@
 services:
   forcoven:
-    image: casmith/forcoven:2025.01.01.eb83a9a1
+    image: casmith/forcoven:2025.01.01.76d0ecc3
     restart: always
   nginx:
     image: nginx:1.15-alpine
