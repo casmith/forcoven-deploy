@@ -19,7 +19,6 @@
         - software-properties-common
         - python3-pip
 
-
     - name: Install python packages
       ansible.builtin.pip:
         name: "{{ item }}"
@@ -50,13 +49,6 @@
       service:
         name: docker
         state: started
-      become: yes
-
-    - name: Pull The Latest NGINX Docker image
-      docker_image:
-        name: nginx
-        tag: latest
-        source: pull
       become: yes
 
     - name: copy Docker Compose files
