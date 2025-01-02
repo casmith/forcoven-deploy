@@ -51,12 +51,34 @@
         state: started
       become: yes
 
+    - name: Log into DockerHub
+      docker_login:
+        username: '{{ lookup("env", "DOCKERHUB_USERNAME") }}'
+        password: '{{ lookup("env", "DOCKERHUB_PASSWORD") }}'
+
+    - name: Creates directory
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - /root/forcoven/data
+        - /root/forcoven/data/nginx
+        - /root/forcoven/data/certbot
+
     - name: copy Docker Compose files
       copy:
         src: "{{ item }}"
         dest: "/root/forcoven/{{ item }}"
       loop:
       - docker-compose.yaml
+
+
+    - name: copy nginx config
+      copy:
+        src: "{{ item }}"
+        dest: "/root/forcoven/{{ item }}"
+      loop:
+      - data/nginx/app.conf
 
     - name: Create and start services
       community.docker.docker_compose_v2:
